@@ -1,0 +1,10 @@
+Create Table Liquors (id integer primary key,name Text, stock INTEGER, sold INTEGER, price INTEGER);
+
+INSERT INTO Liquors values
+(1,"1800",14,6,27.99),
+(2,"Grey Goose",8,3,57.99),
+(3,"Bacardi",25,18,29.99),
+(4,"Tres Leguas", 8,8,26.99),
+(5,"London Dry Gin",7,5,35.99);
+
+select * from liquors where sold >= stock order by price;
