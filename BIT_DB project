@@ -1,0 +1,46 @@
+/*How many orders were placed in Jan */
+Select count(*)
+from BIT_DB.JanSales
+where length(orderID)=6
+
+
+/*How many of those orders were for an iPhone*/
+select count(*) 
+from BIT_DB.JanSales
+where product like 'iphone'
+and length(orderID)=6
+
+
+/*Select the customer account numbers for all the orders that were placed in February.*/
+select distinct acctnum 
+ from BIT_DB.customers c
+ join BIT_DB.Febsales feb
+ on c.order_id=feb.orderID
+ where length(orderID)=6;
+ 
+
+/*Which product was the cheapest one sold in January, and what was the price?*/
+Select product,min(price) 
+from BIT_DB.JanSales
+ 
+
+/*What is the total revenue for each product sold in January? (Revenue can be calculated using the number of products sold and the price of the products).*/
+select sum(quantity)*price as REV
+from BIT_DB.jansales
+group by product
+
+
+/*Which products were sold in February at 548 Lincoln St, Seattle, WA 98101, how many of each were sold, and what was the total revenue*/
+Select Product,
+Sum(quantity),
+sum(quantity)*price as REV
+From BIT_DB.Febsales
+where location= '548 Lincoln St, Seattle, WA 98101'
+
+
+/*How many customers ordered more than 2 products at a time in February, and what was the average amount spent for those customers*/
+Select count(distinct c.acctnum), avg(quantity*price)
+from BIt_DB.Febsales f
+LEFT JOIN BIT_DB.customers c
+on f.orderid = c.order_id
+where f.quantity>2 and length(orderid)=6
