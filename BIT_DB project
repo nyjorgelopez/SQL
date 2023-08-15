@@ -44,3 +44,50 @@ from BIt_DB.Febsales f
 LEFT JOIN BIT_DB.customers c
 on f.orderid = c.order_id
 where f.quantity>2 and length(orderid)=6
+
+
+
+
+/*Which locations in New York received at least 3 orders in January, and how many orders did they each receive*/
+Select distinct location, count(orderID=6)
+from BIT_DB.Jansales
+Where location Like '%New York%'
+group by location
+having count(orderid)>2;
+
+
+/*How many of each type of headphone were sold in February*/
+select sum(quantity),product
+from BIT_DB.febsales
+where product like '%headphone%'
+group by product;
+
+
+/*What was the average amount spent per account in February*/
+select sum(quantity*price)/count(c.acctnum) as avg_spent_per_Feb_acc
+from BIT_DB.customers c
+left join BIT_DB.febsales f
+on c.order_id=f.orderID
+where length (orderid)=6;
+
+
+/*What was the average quantity of products purchased per account in February*/
+select sum(quantity)/count(c.acctnum) as avg_quantity_per_Feb_acc
+from BIT_DB.customers c
+left join BIT_DB.febsales f
+on c.order_id=f.orderID
+where length (orderid)=6;
+
+
+/*Which product brought in the most revenue in January and how much revenue did it bring in total*/
+Select product, sum(quantity*price) as JanRev_per_Product
+from BIT_DB.jansales 
+group by product
+order by JanRev_per_Product desc
+LIMIT 1;
+
+
+
+
+
+
